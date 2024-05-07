@@ -1,0 +1,50 @@
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="scandit-cordova-datacapture-barcode" version="6.24.0-beta.2">
+    <name>ScanditBarcodeCapture</name>
+    <js-module name="Barcode" src="dist/barcode.js">
+        <merges target="Scandit" />
+    </js-module>
+    <js-module name="Scandit" src="dist/index.js">
+        <runs />
+        <merges target="Scandit" />
+    </js-module>
+    <engines>
+        <engine name="cordova-ios" version=">=5.0.0" />
+        <engine name="cordova-android" version=">=7.0.0" />
+    </engines>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ScanditBarcodeCapture">
+                <param name="ios-package" value="ScanditBarcodeCapture" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/ScanditBarcodeCapture-Bridging-Header.h" type="BridgingHeader" />
+        <source-file src="src/ios/BarcodeFindViewHandler.swift" />
+        <source-file src="src/ios/BarcodePickViewHandler.swift" />
+        <source-file src="src/ios/ScanditBarcodeCapture.swift" />
+        <source-file src="src/ios/BlockingCallbackResults.swift" />
+        <source-file src="src/ios/TappableBase64ImageView.swift" />
+        <source-file src="src/ios/CommandJSONArgument+ScanditBarcodeCapture.swift" />
+        <dependency id="scandit-cordova-datacapture-core" version="6.24.0-beta.2" />
+        <podspec>
+            <pods use-frameworks="true">
+                <pod name="scandit-datacapture-frameworks-barcode" spec="= 6.24.0-beta.2" />
+            </pods>
+        </podspec>
+    </platform>
+    <platform name="android">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ScanditBarcodeCapture">
+                <param name="android-package" value="com.scandit.datacapture.cordova.barcode.ScanditBarcodeCapture" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/ScanditBarcodeCapture.kt" target-dir="kotlin/com/scandit/datacapture/cordova/barcode" />
+        <source-file src="src/android/data/SerializableAdvancedOverlayData.kt" target-dir="kotlin/com/scandit/datacapture/cordova/barcode/data" />
+        <source-file src="src/android/handlers/BarcodeFindViewHandler.kt" target-dir="kotlin/com/scandit/datacapture/cordova/barcode/handlers" />
+        <source-file src="src/android/handlers/BarcodePickViewHandler.kt" target-dir="kotlin/com/scandit/datacapture/cordova/barcode/handlers" />
+        <source-file src="src/android/handlers/BarcodeCountViewHandler.kt" target-dir="kotlin/com/scandit/datacapture/cordova/barcode/handlers" />
+        <dependency id="scandit-cordova-datacapture-core" version="6.24.0-beta.2" />
+        <framework custom="true" src="src/android/build.gradle" type="gradleReference" />
+        <hook src="src/hooks/support-kotlin.js" type="after_plugin_install" />
+    </platform>
+</plugin>
